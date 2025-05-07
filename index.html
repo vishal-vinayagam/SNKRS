@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNKRS | Custom Sneaker Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">SNKRS</a>
+            <ul class="nav-links">
+                <li><a href="#collection">Collection</a></li>
+                <li><a href="#customize">Customize</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-login">Login</button>
+                <button class="btn-cart"><i class="fas fa-shopping-cart"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with 3D Animation -->
+    <section class="hero">
+        <div id="sneaker-3d"></div>
+        <div class="hero-content">
+            <h1>CRAFT YOUR SIGNATURE <span>SNKRS</span></h1>
+            <p>Design premium custom sneakers with our 3D studio</p>
+            <a href="#customize" class="btn-primary">START DESIGNING</a>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- Sneaker Showcase Grid -->
+    <section class="showcase" id="collection">
+        <div class="section-header">
+            <h2>MONOCHROME COLLECTION</h2>
+            <p>Explore our curated selection of premium sneakers</p>
+        </div>
+        <div class="showcase-grid">
+            <!-- Shoe cards will be populated by JS -->
+        </div>
+    </section>
+
+    <!-- Customization Studio -->
+    <section class="customize" id="customize">
+        <div class="section-header">
+            <h2>SNEAKER STUDIO</h2>
+            <p>Design your dream pair from scratch</p>
+        </div>
+        <div class="customize-container">
+            <div class="custom-sneaker-view">
+                <div id="custom-sneaker-3d"></div>
+                <div class="view-controls">
+                    <button id="rotate-view"><i class="fas fa-sync-alt"></i> Rotate</button>
+                    <button id="zoom-in"><i class="fas fa-search-plus"></i></button>
+                    <button id="zoom-out"><i class="fas fa-search-minus"></i></button>
+                </div>
+            </div>
+            <div class="custom-controls">
+                <div class="control-tabs">
+                    <button class="tab-btn active" data-tab="model">Model</button>
+                    <button class="tab-btn" data-tab="colors">Colors</button>
+                    <button class="tab-btn" data-tab="materials">Materials</button>
+                    <button class="tab-btn" data-tab="details">Details</button>
+                </div>
+                
+                <div class="tab-content active" id="model-tab">
+                    <h3>Select Base Model</h3>
+                    <div class="model-options">
+                        <div class="model-option" data-model="jordan1">
+                            <img src="https://images.unsplash.com/photo-1600269452121-4f2416e55c28" alt="Jordan 1">
+                            <p>Jordan 1</p>
+                        </div>
+                        <div class="model-option" data-model="af1">
+                            <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a" alt="Air Force 1">
+                            <p>Air Force 1</p>
+                        </div>
+                        <div class="model-option" data-model="yeezy">
+                            <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519" alt="Yeezy 350">
+                            <p>Yeezy 350</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="colors-tab">
+                    <h3>Color Customization</h3>
+                    <div class="color-options">
+                        <div class="color-section">
+                            <h4>Upper</h4>
+                            <div class="color-palette" data-part="upper">
+                                <div class="color-option" data-color="#000000" style="background: #000000;"></div>
+                                <div class="color-option" data-color="#FFFFFF" style="background: #FFFFFF;"></div>
+                                <div class="color-option" data-color="#333333" style="background: #333333;"></div>
+                                <div class="color-option" data-color="#555555" style="background: #555555;"></div>
+                                <div class="color-option" data-color="#777777" style="background: #777777;"></div>
+                            </div>
+                        </div>
+                        <div class="color-section">
+                            <h4>Midsole</h4>
+                            <div class="color-palette" data-part="midsole">
+                                <div class="color-option" data-color="#FFFFFF" style="background: #FFFFFF;"></div>
+                                <div class="color-option" data-color="#F5F5F5" style="background: #F5F5F5;"></div>
+                                <div class="color-option" data-color="#E0E0E0" style="background: #E0E0E0;"></div>
+                                <div class="color-option" data-color="#FFD700" style="background: #FFD700;"></div>
+                                <div class="color-option" data-color="#C0C0C0" style="background: #C0C0C0;"></div>
+                            </div>
+                        </div>
+                        <div class="color-section">
+                            <h4>Outsole</h4>
+                            <div class="color-palette" data-part="outsole">
+                                <div class="color-option" data-color="#000000" style="background: #000000;"></div>
+                                <div class="color-option" data-color="#333333" style="background: #333333;"></div>
+                                <div class="color-option" data-color="#8B4513" style="background: #8B4513;"></div>
+                                <div class="color-option" data-color="#FFFFFF" style="background: #FFFFFF;"></div>
+                                <div class="color-option" data-color="#FF0000" style="background: #FF0000;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="materials-tab">
+                    <h3>Material Selection</h3>
+                    <div class="material-options">
+                        <div class="material-section">
+                            <h4>Upper Material</h4>
+                            <select class="material-select" data-part="upper">
+                                <option value="leather">Premium Leather</option>
+                                <option value="suede">Suede</option>
+                                <option value="canvas">Canvas</option>
+                                <option value="knit">Knit Fabric</option>
+                                <option value="mesh">Breathable Mesh</option>
+                            </select>
+                        </div>
+                        <div class="material-section">
+                            <h4>Lining Material</h4>
+                            <select class="material-select" data-part="lining">
+                                <option value="leather">Leather</option>
+                                <option value="textile">Textile</option>
+                                <option value="mesh">Mesh</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="details-tab">
+                    <h3>Additional Details</h3>
+                    <div class="detail-options">
+                        <div class="detail-section">
+                            <h4>Lace Options</h4>
+                            <select class="detail-select" data-part="laces">
+                                <option value="flat">Flat Laces</option>
+                                <option value="round">Round Laces</option>
+                                <option value="rope">Rope Laces</option>
+                                <option value="elastic">Elastic No-Tie</option>
+                            </select>
+                            <div class="color-palette" data-part="laces">
+                                <div class="color-option" data-color="#000000" style="background: #000000;"></div>
+                                <div class="color-option" data-color="#FFFFFF" style="background: #FFFFFF;"></div>
+                                <div class="color-option" data-color="#FF0000" style="background: #FF0000;"></div>
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <h4>Custom Text</h4>
+                            <input type="text" id="custom-text" placeholder="Add your text (max 10 chars)" maxlength="10">
+                            <div class="color-palette" data-part="text">
+                                <div class="color-option" data-color="#000000" style="background: #000000;"></div>
+                                <div class="color-option" data-color="#FFFFFF" style="background: #FFFFFF;"></div>
+                                <div class="color-option" data-color="#FF0000" style="background: #FF0000;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-summary">
+                    <h3>Your Custom SNKRS</h3>
+                    <div class="summary-details">
+                        <p>Model: <span id="summary-model">Jordan 1</span></p>
+                        <p>Colors: <span id="summary-colors">Black Upper, White Midsole</span></p>
+                        <p>Materials: <span id="summary-materials">Premium Leather</span></p>
+                        <p class="price">$249.00</p>
+                    </div>
+                    <button id="add-to-cart" class="btn-primary"><i class="fas fa-shopping-cart"></i> ADD TO CART</button>
+                    <button id="checkout-now" class="btn-secondary">CHECKOUT NOW</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>ABOUT SNKRS</h2>
+                <p>SNKRS is a premium custom sneaker studio where creativity meets craftsmanship. Founded in 2023, we empower sneaker enthusiasts to design their perfect pair with our advanced 3D customization platform.</p>
+                <p>Each pair is handcrafted by our expert artisans using premium materials and traditional shoemaking techniques combined with modern technology.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <h3>10,000+</h3>
+                        <p>Custom Designs</p>
+                    </div>
+                    <div class="stat">
+                        <h3>98%</h3>
+                        <p>Customer Satisfaction</p>
+                    </div>
+                    <div class="stat">
+                        <h3>14 Days</h3>
+                        <p>Average Production</p>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1460353581641-37baddab0fa2" alt="Sneaker craftsmanship">
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="section-header">
+            <h2>WHAT OUR CUSTOMERS SAY</h2>
+            <p>Join thousands of satisfied sneakerheads</p>
+        </div>
+        <div class="testimonial-container">
+            <div class="testimonial">
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>"The customization options are incredible! I designed my dream Air Jordan 1 and the quality exceeded my expectations."</p>
+                <div class="user">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Alex R.">
+                    <span>Alex R.</span>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>"Finally a platform that lets me truly customize every aspect of my sneakers. Worth every penny!"</p>
+                <div class="user">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah K.">
+                    <span>Sarah K.</span>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p>"The 3D preview was so accurate - what I saw online was exactly what I received. Will definitely design again."</p>
+                <div class="user">
+                    <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Jamal L.">
+                    <span>Jamal L.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Feedback -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-form">
+                <h2>HAVE QUESTIONS?</h2>
+                <form id="feedback-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject">
+                            <option value="general">General Inquiry</option>
+                            <option value="custom">Custom Order Question</option>
+                            <option value="shipping">Shipping Information</option>
+                            <option value="feedback">Feedback/Suggestions</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">SEND MESSAGE</button>
+                </form>
+            </div>
+            <div class="contact-info">
+                <h2>CONTACT US</h2>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>123 Sneaker Street<br>New York, NY 10001</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <p>+1 (555) 123-4567</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>info@snkrs.com</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <p>Monday - Friday: 9AM - 6PM EST<br>Saturday: 10AM - 4PM EST</p>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <a href="#" class="logo">SNKRS</a>
+                <p>Crafting your signature style since 2023</p>
+            </div>
+            <div class="footer-links">
+                <div class="link-group">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="#">Custom Sneakers</a></li>
+                        <li><a href="#">Ready-to-Wear</a></li>
+                        <li><a href="#">Limited Editions</a></li>
+                        <li><a href="#">Accessories</a></li>
+                    </ul>
+                </div>
+                <div class="link-group">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Care Instructions</a></li>
+                    </ul>
+                </div>
+                <div class="link-group">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Process</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-newsletter">
+                <h3>Stay Updated</h3>
+                <p>Subscribe for exclusive drops and customization tips</p>
+                <form id="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit"><i class="fas fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 SNKRS. All rights reserved.</p>
+            <div class="legal-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
